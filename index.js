@@ -2,6 +2,7 @@ const express = require('express');
 const Joi = require('joi');
 const mongoose = require('mongoose');
 const admin = require('./router/admin');
+const customer = require('./router/customers');
 const shop = require('./router/shop');
 const prod = require('./router/products');
 const shopProd = require('./router/shopProd');
@@ -28,6 +29,7 @@ app.use('/api/admin', admin);
 app.use('/api/shop', shop);
 app.use('/api/prod', prod);
 app.use('/api/shopProd', shopProd)
+app.use('/api/customer', customer)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
