@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
         if (err) {
             return res.status(400).json({ message: "invalid token" });
         }
-        if (String(user.role) != "admin") {
+        if (String(user.role) != "admin" && String(user.role) != "customer") {
             return res.status(400).json({ message: "user is not priveleged" });
         }
     });
@@ -37,22 +37,22 @@ router.get('/', async (req, res, next) => {
 
 
 router.post('/', async (req, res, next) => {
-    // const cookies = req.headers.cookie;
-    // if (!cookies) { return res.status(404).json({ message: "cookies not found" }) }
+    const cookies = req.headers.cookie;
+    if (!cookies) { return res.status(404).json({ message: "cookies not found" }) }
 
-    // const token = cookies.split("=")[1];
-    // if (!token) {
-    //     return res.status(400).json({ message: "token not found!" });
-    // }
+    const token = cookies.split("=")[1];
+    if (!token) {
+        return res.status(400).json({ message: "token not found!" });
+    }
 
-    // jwt.verify(String(token), config.get("jwtPrivateKey"), (err, user) => {
-    //     if (err) {
-    //         return res.status(400).json({ message: "invalid token" });
-    //     }
-    //     if (String(user.role) != "admin") {
-    //         return res.status(400).json({ message: "user is not priveleged" });
-    //     }
-    // });
+    jwt.verify(String(token), config.get("jwtPrivateKey"), (err, user) => {
+        if (err) {
+            return res.status(400).json({ message: "invalid token" });
+        }
+        if (String(user.role) != "admin") {
+            return res.status(400).json({ message: "user is not priveleged" });
+        }
+    });
     const { error } = validateShop(req.body);
     if (error) {
         res.status(400).send(error.details[0].message);
@@ -63,6 +63,7 @@ router.post('/', async (req, res, next) => {
         location: req.body.location,
         email: req.body.email,
         password: hashedPassword,
+        wallet: 0,
         role: req.body.role
     });
     try {

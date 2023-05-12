@@ -21,6 +21,10 @@ const shopSchema = mongoose.Schema({
     role: {
         type: String,
         required: true
+    },
+    wallet: {
+        type: Number,
+        required: true,
     }
 });
 
