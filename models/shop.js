@@ -6,6 +6,10 @@ const shopSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    // img_file: {
+    //     data: Buffer,
+    //     contentType: String,
+    // },
     location: {
         type: String,
         required: true

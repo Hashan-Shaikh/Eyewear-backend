@@ -168,24 +168,24 @@ router.post('/logout', verifyToken, (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-    const cookies = req.headers.cookie;
-    if (!cookies) { return res.status(404).json({ message: "cookies not found" }) }
+    // const cookies = req.headers.cookie;
+    // if (!cookies) { return res.status(404).json({ message: "cookies not found" }) }
 
-    const token = cookies.split("=")[1];
-    if (!token) {
-        return res.status(400).json({ message: "token not found!" });
-    }
+    // const token = cookies.split("=")[1];
+    // if (!token) {
+    //     return res.status(400).json({ message: "token not found!" });
+    // }
 
-    jwt.verify(String(token), config.get("jwtPrivateKey"), (err, user) => {
-        if (err) {
-            return res.status(400).json({ message: "invalid token" });
-        }
-        if (String(user.role) != "admin" && String(user.role) != "customer") {
-            return res.status(400).json({ message: "user is not priveleged" });
-        }
-    });
+    // jwt.verify(String(token), config.get("jwtPrivateKey"), (err, user) => {
+    //     if (err) {
+    //         return res.status(400).json({ message: "invalid token" });
+    //     }
+    //     if (String(user.role) != "admin" && String(user.role) != "customer") {
+    //         return res.status(400).json({ message: "user is not priveleged" });
+    //     }
+    // });
     try {
-        const customer = await Customer.findOne({ _id: req.params.id });
+        const customer = await Customer.find({ _id: req.params.id });
         if (!customer) { return res.status(404).json({ message: "customer not found" }) }
         res.status(200).json({ customer });
     }
