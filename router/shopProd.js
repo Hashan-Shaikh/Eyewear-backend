@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const { Shop, validateShop } = require('../models/shop');
-const { Prod, validateProd } = require('../models/products');
 const { shopProd, shopProdValidate } = require('../models/shopProd');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -20,7 +19,7 @@ router.get('/:id', async (req, res, next) => {
         if (err) {
             return res.status(400).json({ message: "invalid token" });
         }
-        if (String(user.role) != "shop") {
+        if (String(user.role) != "shop" && String(user.role) != "customer") {
             return res.status(400).json({ message: "user is not priveleged" });
         }
     });

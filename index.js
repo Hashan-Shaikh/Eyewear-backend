@@ -3,8 +3,9 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 const admin = require('./router/admin');
 const shop = require('./router/shop');
-const prod = require('./router/products');
 const shopProd = require('./router/shopProd');
+const customer = require('./router/customer');
+const order = require('./router/order');
 const config = require('config');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -26,8 +27,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use('/api/admin', admin);
 app.use('/api/shop', shop);
-app.use('/api/prod', prod);
 app.use('/api/shopProd', shopProd)
+app.use('/api/customer', customer)
+app.use('/api/order', order)
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
